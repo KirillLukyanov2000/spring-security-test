@@ -16,9 +16,9 @@
 <main role="main" class="container">
 
   <div class="starter-template">
-    <h1>JRU Spring Boot Thymleaf Exmaple</h1>
+    <h1>Spring Boot Thymeleaf Example</h1>
     <h2>
-      <span th:text="'Hello, ' + ${message}"></span>
+      <span th:text="'Hello, this is ' + ${message}"></span>
     </h2>
   </div>
 
@@ -29,8 +29,8 @@
     <li th:each="user : ${users}" th:text="${user}"></li>
   </ol>
 
-  <form action="/json/12">
-    <input type="submit" value="Go to JSON 12" />
+  <form action="/users/13">
+    <input type="submit" value="Go to JSON User #13" />
   </form>
 
   <form th:action="@{/logout}" method="post">
