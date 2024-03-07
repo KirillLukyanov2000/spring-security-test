@@ -3,6 +3,8 @@ package ru.lukyanov.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
 import ru.lukyanov.entity.User;
 import ru.lukyanov.service.UserService;
 
@@ -23,5 +25,11 @@ public class UsersController {
         model.addAttribute("message", "Users List From DB:");
         model.addAttribute("users", userList);
         return "users";
+    }
+
+    @GetMapping("/users/{id}")
+    @ResponseBody
+    public User returnUser(@PathVariable long id) {
+        return userService.findById(id).orElseThrow();
     }
 }

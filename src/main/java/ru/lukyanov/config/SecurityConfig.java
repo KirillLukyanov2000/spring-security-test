@@ -41,7 +41,6 @@ public class SecurityConfig {
                                 .permitAll()
                 )
                 .logout((logout) -> logout.permitAll());
-
         return http.build();
     }
 
@@ -58,7 +57,6 @@ public class SecurityConfig {
                 .password(passwordEncoder.encode(adminPassword))
                 .roles("USER", "ADMIN")
                 .build();
-
         return new InMemoryUserDetailsManager(user, admin);
     }
 
