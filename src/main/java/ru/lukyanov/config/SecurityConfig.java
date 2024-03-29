@@ -24,14 +24,16 @@ public class SecurityConfig {
     private String adminLogin;
     @Value("${admin.password}")
     private String adminPassword;
+    private static final String ROLE_USER = "USER";
+    private static final String ROLE_ADMIN = "ADMIN";
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/register").permitAll()
-                        .requestMatchers("/users").hasRole("USER")
-                        .requestMatchers("/users/{}").hasRole("ADMIN")
+                        .requestMatchers("/users").hasRole(ROLE_USER)
+                        .requestMatchers("/users/{}").hasRole(ROLE_ADMIN)
                         .requestMatchers("/", "/index").permitAll()
                         .anyRequest().authenticated()
                 )
@@ -49,13 +51,13 @@ public class SecurityConfig {
         UserDetails user = User
                 .withUsername(userLogin)
                 .password(passwordEncoder.encode(userPassword))
-                .roles("USER")
+                .roles(ROLE_USER)
                 .build();
 
         UserDetails admin = User
                 .withUsername(adminLogin)
                 .password(passwordEncoder.encode(adminPassword))
-                .roles("USER", "ADMIN")
+                .roles(ROLE_USER, ROLE_ADMIN)
                 .build();
         return new InMemoryUserDetailsManager(user, admin);
     }
@@ -63,6 +65,7 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+//      PasswordEncoder encoder = new BCryptPasswordEncoder(); 
         return encoder;
     }
 }
